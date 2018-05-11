@@ -9,8 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Document(collection = "person")
-public class Person {
+@Document(collection = "users")
+public class User {
 
     @Id
     private String id;
@@ -22,10 +22,10 @@ public class Person {
 
     private Date birthDate;
 
-    public Person() {
+    public User() {
     }
 
-    public Person(String name, String city, String birthDate) {
+    public User(String name, String city, String birthDate) {
         this.name = name;
         this.city = city;
         this.birthDate = createDate(birthDate);
@@ -70,13 +70,13 @@ public class Person {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = createDate(birthDate);
     }
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
