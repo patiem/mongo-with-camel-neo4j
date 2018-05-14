@@ -10,16 +10,16 @@ import java.util.Date;
 import java.util.List;
 
 
-@Service
+@Service(value = "userService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository repository;
 
     @Override
-    public String save(User user) {
+    public void save(User user) {
         repository.save(user);
-        return user.getId();
+//        return user.getId();
     }
 
     @Override

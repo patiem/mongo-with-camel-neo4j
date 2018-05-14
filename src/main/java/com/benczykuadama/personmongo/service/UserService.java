@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserService {
 
-    String save(User user);
+    void save(User user);
 
     List<User> findAll();
 

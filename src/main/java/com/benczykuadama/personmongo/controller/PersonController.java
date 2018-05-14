@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+//@RestController
+//@RequestMapping("/users")
 public class PersonController {
 
     @Autowired
     UserService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@RequestBody User user) {
-        return service.save(user);
+    public void save(@RequestBody User user) {
+        service.save(user);
     }
 
     @RequestMapping(method = RequestMethod.GET)
