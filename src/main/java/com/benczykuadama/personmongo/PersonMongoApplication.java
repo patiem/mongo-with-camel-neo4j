@@ -20,6 +20,5 @@ public class PersonMongoApplication {
         ServletRegistrationBean servlet =  new ServletRegistrationBean(new CamelHttpTransportServlet(), "/api/*");
         servlet.setName("CamelServlet");
         return servlet;
-
     }
 }

@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.YEAR, -years);
         Date date = now.getTime();
+        System.out.println(date.toString());
         return date;
     }
 }
