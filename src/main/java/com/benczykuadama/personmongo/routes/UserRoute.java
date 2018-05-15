@@ -12,15 +12,20 @@ public class UserRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         restConfiguration()
-                .component("restlet")
-                .host("0.0.0.0")
-                .port(8085)
+                .component("servlet")
+//                .host("0.0.0.0")
+//                .port(8085)
                 .bindingMode(RestBindingMode.json)
-        .apiContextPath("/api/api-doc")
-        .apiProperty("api.title", "Mordabook API")
-        .apiProperty("api.version", "6.6.6");
 
-        rest("/api/users")
+        .contextPath("/api")
+        .apiContextPath("/swagger")
+        .apiContextRouteId("swagger")
+        .apiProperty("api.title", "Mordabook API")
+        .apiProperty("api.version", "6.6.6")
+                .scheme("http,https")
+                .host("localhost:8080");
+
+        rest("/users")
                 .produces("aplication/json")
                 .consumes("aplication/json")
 
