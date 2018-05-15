@@ -1,5 +1,6 @@
 package com.benczykuadama.personmongo.routes;
 
+import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.User;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -61,6 +62,14 @@ public class UserRoute extends RouteBuilder {
                     .param().name("max").type(RestParamType.query).description("Maximal age").required(true).dataType("integer").endParam()
                     .param().name("city").type(RestParamType.query).description("User city").required(true).dataType("string").endParam()
                 .to("bean:userService?method=findAllByBirthDateBetweenAndName(${header.max}, ${header.min}, ${header.name})");
+
+
+        rest("/{user}")
+                .produces("aplication/json")
+                .consumes("aplication/json")
+            .get().outType(Friend.class)
+                .param().name("user").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=findByName(${header.user})");
 
     }
 }
