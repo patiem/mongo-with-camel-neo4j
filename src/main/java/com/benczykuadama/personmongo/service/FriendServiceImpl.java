@@ -2,10 +2,12 @@ package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.repository.FriendRepository;
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
+
 
 @Service(value = "friendService")
 public class FriendServiceImpl implements FriendService {
@@ -19,8 +21,8 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public Iterable<Friend> findAll() {
-        return repository.findAll();
+    public Collection<Friend> findAll() {
+        return IteratorUtils.toList(repository.findAll().iterator());
 
     }
 

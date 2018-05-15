@@ -69,7 +69,9 @@ public class UserRoute extends RouteBuilder {
                 .consumes("aplication/json")
             .get().outType(Friend.class)
                 .param().name("user").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=findByName(${header.user})");
+                .to("bean:friendService?method=findByName(${header.user})")
+
+        .get("/all").outTypeList(Friend.class).to("bean:friendService?method=findAll()");
 
     }
 }
