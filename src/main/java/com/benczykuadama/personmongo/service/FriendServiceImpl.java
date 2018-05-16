@@ -31,4 +31,9 @@ public class FriendServiceImpl implements FriendService {
     public Friend findByName(String name) {
         return repository.findByName(name);
     }
+
+    @Override
+    public void invite(String user, String friend) {
+        repository.invite(user, friend);
+    }
 }

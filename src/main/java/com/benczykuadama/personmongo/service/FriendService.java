@@ -13,4 +13,6 @@ public interface FriendService {
     Collection<Friend> findAll();
 
     Friend findByName(String name);
+
+    void invite(String user, String friend);
 }

@@ -71,11 +71,21 @@ public class UserRoute extends RouteBuilder {
         rest("/{user}")
                 .produces("aplication/json")
                 .consumes("aplication/json")
+
             .get().outType(Friend.class)
                 .param().name("user").type(RestParamType.path).dataType("string").endParam()
                 .to("bean:friendService?method=findByName(${header.user})")
 
-        .get("/all").outTypeList(Friend.class).to("bean:friendService?method=findAll()");
+        .get("/all").outTypeList(Friend.class)
+                .to("bean:friendService?method=findAll()")
+
+        .post("/invite/{another}")
+                .param().name("user").type(RestParamType.path).dataType("string").endParam()
+                .param().name("another").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=invite(${header.user}, ${header.another})");
+
+
+
 
 
         from("direct:register").enrich("direct:mongo", (exchange, exchange1) -> exchange1).to("bean:friendService?method=save(${body})");
