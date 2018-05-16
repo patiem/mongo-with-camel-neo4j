@@ -1,5 +1,7 @@
 package com.benczykuadama.personmongo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
@@ -15,9 +17,11 @@ public class Friendship {
     private Long id;
 
     @StartNode
+    @JsonBackReference
     private Friend first;
 
     @EndNode
+    @JsonBackReference
     private Friend second;
 
     @DateLong

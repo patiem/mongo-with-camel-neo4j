@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Date;
 
 
 @Service(value = "friendService")
@@ -34,6 +35,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void invite(String user, String friend) {
-        repository.invite(user, friend);
+        Date date = new Date();
+        repository.invite(user, friend, date);
     }
 }

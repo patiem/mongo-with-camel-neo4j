@@ -1,5 +1,7 @@
 package com.benczykuadama.personmongo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -17,6 +19,7 @@ public class Friend {
     private String name;
 
     @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
+    @JsonManagedReference
     private Set<Friendship> pairs = new HashSet<>();
 
 //    @Relationship(type = "HAS_INVITEd", direction = "OUTGOING")

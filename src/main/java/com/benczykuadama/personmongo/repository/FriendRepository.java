@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.Date;
 import java.util.Map;
 
 @Repository
@@ -20,6 +21,6 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
 //        WHERE NOT(()-[:has_resource]->res)
 //        CREATE a-[:has_resource]->res
 
-    @Query("MATCH (u:Friend {name:{0}}), (f:Friend {name:{1}}) CREATE (u)-[:FRIENDS_WITH]->(f)")
-    void invite(String name, String name2);
+    @Query("MATCH (u:Friend {name:{0}}), (f:Friend {name:{1}}) CREATE (u)-[:FRIENDS_WITH {dateAdded:{2}}]->(f)")
+    void invite(String name, String name2, Date date);
 }
