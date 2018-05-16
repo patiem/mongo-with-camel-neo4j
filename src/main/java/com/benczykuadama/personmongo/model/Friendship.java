@@ -9,7 +9,7 @@ import org.neo4j.ogm.annotation.typeconversion.DateLong;
 import java.util.Date;
 
 @RelationshipEntity(type = "FRIENDS_WITH")
-public class Frienship {
+public class Friendship {
 
     @GraphId
     private Long id;
@@ -23,7 +23,14 @@ public class Frienship {
     @DateLong
     private Date dateAdded;
 
-    public Frienship() {
+    public Friendship() {
+    }
+
+    public Friendship(Friend first, Friend second) {
+
+        this.first = first;
+        this.second = second;
+        dateAdded = new Date();
     }
 
     public Long getId() {

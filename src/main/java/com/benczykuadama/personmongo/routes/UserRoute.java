@@ -2,9 +2,13 @@ package com.benczykuadama.personmongo.routes;
 
 import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.User;
+import com.benczykuadama.personmongo.service.UserService;
+import com.benczykuadama.personmongo.service.UserServiceImpl;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
+import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,7 +34,7 @@ public class UserRoute extends RouteBuilder {
                 .consumes("aplication/json")
 
                 .post().type(User.class)
-                    .to("bean:userService?method=save(${body})")
+                    .to("direct:register")
 
                 .get().outType(User[].class)
                     .to("bean:userService?method=findAll()")
@@ -73,5 +77,9 @@ public class UserRoute extends RouteBuilder {
 
         .get("/all").outTypeList(Friend.class).to("bean:friendService?method=findAll()");
 
+
+        from("direct:register").enrich("direct:mongo", (exchange, exchange1) -> exchange1).to("bean:friendService?method=save(${body})");
+
+        from("direct:mongo").to("bean:userService?method=save(${body})");
     }
 }

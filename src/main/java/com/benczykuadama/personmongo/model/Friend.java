@@ -17,7 +17,7 @@ public class Friend {
     private String name;
 
     @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
-    private Set<Frienship> pairs = new HashSet<>();
+    private Set<Friendship> pairs = new HashSet<>();
 
 //    @Relationship(type = "HAS_INVITEd", direction = "OUTGOING")
 //    private Set<Invitation> invitations = new HashSet<>();
@@ -30,10 +30,16 @@ public class Friend {
         this.name = name;
     }
 
-    public void addFrienship(Frienship frienship) {
-        frienship.getFirst().getPairs().add(frienship);
-        frienship.getSecond().getPairs().add(frienship);
+    public static Friend from(User user) {
+        Friend friend =  new Friend();
+        friend.setMongoId(user.getId());
+        friend.setName(user.getName());
+        return friend;
+    }
 
+    public void addFrienship(Friendship friendship) {
+        friendship.getFirst().getPairs().add(friendship);
+        friendship.getSecond().getPairs().add(friendship);
     }
 
     public Long getId() {
@@ -60,11 +66,11 @@ public class Friend {
         this.name = name;
     }
 
-    public Set<Frienship> getPairs() {
+    public Set<Friendship> getPairs() {
         return pairs;
     }
 
-    public void setPairs(Set<Frienship> pairs) {
+    public void setPairs(Set<Friendship> pairs) {
         this.pairs = pairs;
     }
 

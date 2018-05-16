@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.repository.FriendRepository;
 import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class FriendServiceImpl implements FriendService {
     FriendRepository repository;
 
     @Override
-    public void save(Friend friend) {
-        repository.save(friend);
+    public void save(User user) {
+        repository.save(Friend.from(user));
     }
 
     @Override

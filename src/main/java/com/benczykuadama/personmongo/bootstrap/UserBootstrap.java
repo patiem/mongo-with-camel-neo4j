@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.bootstrap;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Friendship;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.repository.FriendRepository;
 import com.benczykuadama.personmongo.repository.UserRepository;
@@ -44,9 +45,18 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         Friend lucy = new Friend("5", "Lucy");
 
         List<Friend> team = Arrays.asList(bob, greg, john, lucy, eve);
+
         neoRepository.save(team);
 
+        Friendship friendship = new Friendship(bob, greg);
+        bob.addFrienship(friendship);
+        Friendship friendship2 = new Friendship(john, greg);
+        john.addFrienship(friendship2);
+        Friendship friendship3 = new Friendship(eve, lucy);
+        lucy.addFrienship(friendship3);
 
+        neoRepository.save(greg);
+        neoRepository.save(eve);
 
     }
 
