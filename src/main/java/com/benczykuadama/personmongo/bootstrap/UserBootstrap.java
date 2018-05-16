@@ -18,6 +18,13 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
     private final UserRepository mongoRepository;
     private final FriendRepository neoRepository;
+    private User ala;
+    private User ola;
+    private User ela;
+    private User tom;
+    private User tobi;
+    private User tommy;
+    private List<User> team;
 
     public UserBootstrap(UserRepository repository, FriendRepository neoRepository) {
         this.mongoRepository = repository;
@@ -29,6 +36,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         populateMongo();
+
         populateNeo();
 
     }
@@ -38,25 +46,25 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
         neoRepository.deleteAll();
 
-        Friend bob = new Friend("1", "Bob");
-        Friend greg = new Friend("2", "Greg");
-        Friend john = new Friend("3", "John");
-        Friend eve = new Friend("4", "Eve");
-        Friend lucy = new Friend("5", "Lucy");
+        Friend alaF = Friend.from(ala);
+        Friend olaF = Friend.from(ola);
+        Friend elaF = Friend.from(ela);
+        Friend tomF = Friend.from(tom);
+        Friend tommyF = Friend.from(tommy);
+        Friend tobiF = Friend.from(tobi);
 
-        List<Friend> team = Arrays.asList(bob, greg, john, lucy, eve);
+        List<Friend> teamF = Arrays.asList(alaF, olaF, elaF, tomF, tommyF, tobiF);
 
-        neoRepository.save(team);
+        neoRepository.save(teamF);
 
-        Friendship friendship = new Friendship(bob, greg);
-        bob.addFrienship(friendship);
-        Friendship friendship2 = new Friendship(john, greg);
-        john.addFrienship(friendship2);
-        Friendship friendship3 = new Friendship(eve, lucy);
-        lucy.addFrienship(friendship3);
+        alaF.addFrienship(new Friendship(alaF, olaF));
+        alaF.addFrienship(new Friendship(alaF, elaF));
+        neoRepository.save(alaF);
 
-        neoRepository.save(greg);
-        neoRepository.save(eve);
+        tomF.addFrienship(new Friendship(tobiF, tomF));
+        tomF.addFrienship(new Friendship(tommyF, tomF));
+        tomF.addFrienship(new Friendship(olaF, tomF));
+        neoRepository.save(tomF);
 
     }
 
@@ -64,12 +72,16 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
         mongoRepository.deleteAll();
 
-        mongoRepository.save(new User("Ala", "Cracow", "01-12-1990"));
-        mongoRepository.save(new User("Ola", "Cracow", "01-12-1999"));
-        mongoRepository.save(new User("Ela", "Warsaw", "01-12-1980"));
-        mongoRepository.save(new User("Tom", "Warsaw", "01-12-2000"));
-        mongoRepository.save(new User("Tobi", "London", "01-12-1970"));
-        mongoRepository.save(new User("Tommy", "London", "01-12-2010"));
+        ala = new User("Ala", "Cracow", "01-12-1990");
+        ola = new User("Ola", "Cracow", "01-12-1999");
+        ela = new User("Ela", "Warsaw", "01-12-1980");
+        tom = new User("Tom", "Warsaw", "01-12-2000");
+        tobi = new User("Tobi", "London", "01-12-1970");
+        tommy = new User("Tommy", "London", "01-12-2010");
+
+        team = Arrays.asList(ala, ola, ela, tom, tobi, tommy);
+
+        mongoRepository.save(team);
 
     }
 }
