@@ -16,8 +16,10 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
     Friend findByName(String name);
 
     @Query("MATCH (me:Friend {name:{0}})-[:FRIENDS_WITH]-(friend:Friend) RETURN friend")
-    List<Friend> findAllByFriendships(String name);
+    List<Friend> findAllFriends(String name);
 
+    @Query("MATCH (me:Friend {name:{0}})-[:FRIENDS_WITH*]-(friend:Friend) RETURN friend")
+    List<Friend> findNetwork(String name);
 
     @Query("MATCH (u:Friend {name:{0}}), (f:Friend {name:{1}}) CREATE (u)-[:FRIENDS_WITH {dateAdded:{2}}]->(f)")
     void invite(String name, String name2, Date date);

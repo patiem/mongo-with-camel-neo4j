@@ -7,7 +7,6 @@ import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +23,8 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public Collection<Friend> findAll() {
+    public List<Friend> findAll() {
         return IteratorUtils.toList(repository.findAll().iterator());
-
     }
 
     @Override
@@ -36,7 +34,12 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public List<Friend> findAllFriends(String name) {
-        return IteratorUtils.toList(repository.findAllByFriendships(name).iterator());
+        return IteratorUtils.toList(repository.findAllFriends(name).iterator());
+    }
+
+    @Override
+    public List<Friend> findNetwork(String name) {
+        return IteratorUtils.toList(repository.findNetwork(name).iterator());
     }
 
     @Override

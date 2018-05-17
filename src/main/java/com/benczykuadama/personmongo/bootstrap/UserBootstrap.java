@@ -24,6 +24,9 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
     private User tom;
     private User tobi;
     private User tommy;
+    private User greg;
+    private User john;
+    private User paul;
     private List<User> team;
 
     public UserBootstrap(UserRepository repository, FriendRepository neoRepository) {
@@ -36,13 +39,11 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
         populateMongo();
-
         populateNeo();
 
     }
 
     private void populateNeo() {
-
 
         neoRepository.deleteAll();
 
@@ -53,7 +54,11 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         Friend tommyF = Friend.from(tommy);
         Friend tobiF = Friend.from(tobi);
 
-        List<Friend> teamF = Arrays.asList(alaF, olaF, elaF, tomF, tommyF, tobiF);
+        Friend gregF = Friend.from(greg);
+        Friend johnF = Friend.from(john);
+        Friend paulF = Friend.from(paul);
+
+        List<Friend> teamF = Arrays.asList(alaF, olaF, elaF, tomF, tommyF, tobiF, gregF, johnF, paulF);
 
         neoRepository.save(teamF);
 
@@ -65,6 +70,15 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         tomF.addFrienship(new Friendship(tommyF, tomF));
         tomF.addFrienship(new Friendship(olaF, tomF));
         neoRepository.save(tomF);
+
+//        johnF.addFrienship(new Friendship(johnF, alaF));
+//        neoRepository.save(johnF);
+
+        gregF.addFrienship(new Friendship(gregF, paulF));
+        gregF.addFrienship(new Friendship(gregF, johnF));
+        neoRepository.save(gregF);
+        paulF.addFrienship(new Friendship(paulF,johnF));
+        neoRepository.save(paulF);
 
     }
 
@@ -79,7 +93,11 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         tobi = new User("Tobi", "London", "01-12-1970");
         tommy = new User("Tommy", "London", "01-12-2010");
 
-        team = Arrays.asList(ala, ola, ela, tom, tobi, tommy);
+        greg = new User("Greg", "Warsaw", "01-12-2000");
+        john = new User("John", "London", "01-12-1970");
+        paul = new User("Paul", "London", "01-12-2010");
+
+        team = Arrays.asList(ala, ola, ela, tom, tobi, tommy, greg, john, paul);
 
         mongoRepository.save(team);
 

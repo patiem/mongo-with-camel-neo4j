@@ -10,11 +10,13 @@ public interface FriendService {
 
     void save(User user);
 
-    Collection<Friend> findAll();
+    List<Friend> findAll();
 
     Friend findByName(String name);
 
     List<Friend> findAllFriends(String name);
+
+    List<Friend> findNetwork(String name);
 
     void invite(String user, String friend);
 }

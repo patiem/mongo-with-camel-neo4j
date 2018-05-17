@@ -82,6 +82,9 @@ public class UserRoute extends RouteBuilder {
             .get("/friends").outTypeList(Friend.class)
                 .to("bean:friendService?method=findAllFriends(${header.userName})")
 
+            .get("/network").outTypeList(Friend.class)
+                .to("bean:friendService?method=findNetwork(${header.userName})")
+
             .post("/invite/{another}")
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("another").type(RestParamType.path).dataType("string").endParam()
