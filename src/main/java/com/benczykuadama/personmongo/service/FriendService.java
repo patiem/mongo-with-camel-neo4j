@@ -24,4 +24,6 @@ public interface FriendService {
 
     void makeFriends(String user, String friend);
 
+    void unfriend(String user, String friend);
+
 }

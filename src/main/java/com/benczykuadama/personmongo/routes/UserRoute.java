@@ -97,7 +97,12 @@ public class UserRoute extends RouteBuilder {
             .post("/accept/{friendName}")
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=makeFriends(${header.userName}, ${header.friendName})");
+                .to("bean:friendService?method=makeFriends(${header.userName}, ${header.friendName})")
+
+            .post("/unfriend/{friendName}")
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=unfriend(${header.userName}, ${header.friendName})");
 
 
 

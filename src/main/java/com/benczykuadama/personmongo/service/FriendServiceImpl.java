@@ -55,6 +55,12 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
+    public void unfriend(String user, String friend) {
+        repository.unfriend(user, friend);
+    }
+
+
+    @Override
     public List<Invitation> showInvitations(String name) {
         return IteratorUtils.toList(repository.getInvitations(name).iterator());
     }

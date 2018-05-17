@@ -31,7 +31,8 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
     @Query("MATCH (u:Friend {name:{0}})-[rel:IS_INVITED]-(f:Friend) RETURN rel")
     List<Invitation> getInvitations(String name);
 
-
+    @Query("MATCH (u:Friend {name:{0}})-[r]-(f:Friend {name:{1}}) WHERE type(r)='FRIENDS_WITH' DELETE r")
+    void unfriend(String user, String friend);
 }
 
 
