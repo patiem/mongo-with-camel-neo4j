@@ -68,21 +68,24 @@ public class UserRoute extends RouteBuilder {
                 .to("bean:userService?method=findAllByBirthDateBetweenAndName(${header.max}, ${header.min}, ${header.name})");
 
 
-        rest("/{user}")
+        rest("/user/{userName}")
                 .produces("aplication/json")
                 .consumes("aplication/json")
 
             .get().outType(Friend.class)
-                .param().name("user").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=findByName(${header.user})")
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=findByName(${header.userName})")
 
-        .get("/all").outTypeList(Friend.class)
+            .get("/all").outTypeList(Friend.class)
                 .to("bean:friendService?method=findAll()")
 
-        .post("/invite/{another}")
-                .param().name("user").type(RestParamType.path).dataType("string").endParam()
+            .get("/friends").outTypeList(Friend.class)
+                .to("bean:friendService?method=findAllFriends(${header.userName})")
+
+            .post("/invite/{another}")
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("another").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=invite(${header.user}, ${header.another})");
+                .to("bean:friendService?method=invite(${header.userName}, ${header.another})");
 
 
 

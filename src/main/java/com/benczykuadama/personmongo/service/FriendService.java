@@ -14,5 +14,7 @@ public interface FriendService {
 
     Friend findByName(String name);
 
+    List<Friend> findAllFriends(String name);
+
     void invite(String user, String friend);
 }

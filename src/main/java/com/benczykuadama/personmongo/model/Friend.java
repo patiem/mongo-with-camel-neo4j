@@ -1,7 +1,5 @@
 package com.benczykuadama.personmongo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -19,8 +17,7 @@ public class Friend {
     private String name;
 
     @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
-    @JsonManagedReference
-    private Set<Friendship> pairs = new HashSet<>();
+    private Set<Friendship> friendships = new HashSet<>();
 
 //    @Relationship(type = "HAS_INVITEd", direction = "OUTGOING")
 //    private Set<Invitation> invitations = new HashSet<>();
@@ -41,8 +38,8 @@ public class Friend {
     }
 
     public void addFrienship(Friendship friendship) {
-        friendship.getFirst().getPairs().add(friendship);
-        friendship.getSecond().getPairs().add(friendship);
+        friendship.getFirst().getFriendships().add(friendship);
+        friendship.getSecond().getFriendships().add(friendship);
     }
 
     public Long getId() {
@@ -69,12 +66,12 @@ public class Friend {
         this.name = name;
     }
 
-    public Set<Friendship> getPairs() {
-        return pairs;
+    public Set<Friendship> getFriendships() {
+        return friendships;
     }
 
-    public void setPairs(Set<Friendship> pairs) {
-        this.pairs = pairs;
+    public void setFriendships(Set<Friendship> friendships) {
+        this.friendships = friendships;
     }
 
 //    public Set<Invitation> getInvitations() {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 
 @Service(value = "friendService")
@@ -31,6 +32,11 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public Friend findByName(String name) {
         return repository.findByName(name);
+    }
+
+    @Override
+    public List<Friend> findAllFriends(String name) {
+        return IteratorUtils.toList(repository.findAllByFriendships(name).iterator());
     }
 
     @Override
