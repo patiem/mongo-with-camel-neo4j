@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.repository;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Invitation;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
@@ -21,8 +22,15 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
     @Query("MATCH (me:Friend {name:{0}})-[:FRIENDS_WITH*]-(friend:Friend) RETURN friend")
     List<Friend> findNetwork(String name);
 
+    @Query("MATCH (u:Friend {name:{1}}), (f:Friend {name:{0}}) CREATE (u)-[:IS_INVITED]->(f)")
+    void invite(String name, String name2);
+
     @Query("MATCH (u:Friend {name:{0}}), (f:Friend {name:{1}}) CREATE (u)-[:FRIENDS_WITH {dateAdded:{2}}]->(f)")
-    void invite(String name, String name2, Date date);
+    void makeFriend(String name, String name2, Date date);
+
+    @Query("MATCH (u:Friend {name:{0}})-[rel:IS_INVITED]-(f:Friend) RETURN rel")
+    List<Invitation> getInviations(String name);
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.repository.FriendRepository;
 import org.apache.commons.collections4.IteratorUtils;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service(value = "friendService")
 public class FriendServiceImpl implements FriendService {
+
 
     @Autowired
     FriendRepository repository;
@@ -44,7 +46,11 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void invite(String user, String friend) {
-        Date date = new Date();
-        repository.invite(user, friend, date);
+        repository.invite(user, friend);
+    }
+
+    @Override
+    public List<Invitation> showInvitations(String name) {
+        return IteratorUtils.toList(repository.getInviations(name).iterator());
     }
 }

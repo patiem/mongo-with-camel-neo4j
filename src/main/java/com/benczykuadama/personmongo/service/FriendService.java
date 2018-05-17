@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
 
 import java.util.Collection;
@@ -19,4 +20,6 @@ public interface FriendService {
     List<Friend> findNetwork(String name);
 
     void invite(String user, String friend);
+
+    List<Invitation> showInvitations(String name);
 }

@@ -1,7 +1,5 @@
 package com.benczykuadama.personmongo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
@@ -26,7 +24,7 @@ public class Friendship {
     private Friend second;
 
     @DateLong
-    private Date dateAdded;
+    private Date since;
 
     public Friendship() {
     }
@@ -35,7 +33,7 @@ public class Friendship {
 
         this.first = first;
         this.second = second;
-        dateAdded = new Date();
+        since = new Date();
     }
 
     public Long getId() {
@@ -62,11 +60,11 @@ public class Friendship {
         this.second = second;
     }
 
-    public Date getDateAdded() {
-        return dateAdded;
+    public Date getSince() {
+        return since;
     }
 
-    public void setDateAdded(Date dateAdded) {
-        this.dateAdded = dateAdded;
+    public void setSince(Date since) {
+        this.since = since;
     }
 }

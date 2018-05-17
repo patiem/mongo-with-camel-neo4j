@@ -71,8 +71,6 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         tomF.addFrienship(new Friendship(olaF, tomF));
         neoRepository.save(tomF);
 
-//        johnF.addFrienship(new Friendship(johnF, alaF));
-//        neoRepository.save(johnF);
 
         gregF.addFrienship(new Friendship(gregF, paulF));
         gregF.addFrienship(new Friendship(gregF, johnF));

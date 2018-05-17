@@ -19,8 +19,8 @@ public class Friend {
     @Relationship(type = "FRIENDS_WITH", direction = Relationship.UNDIRECTED)
     private Set<Friendship> friendships = new HashSet<>();
 
-//    @Relationship(type = "HAS_INVITEd", direction = "OUTGOING")
-//    private Set<Invitation> invitations = new HashSet<>();
+    @Relationship(type = "IS_INVITED")
+    private Set<Invitation> invitations = new HashSet<>();
 
     public Friend() {
     }
@@ -74,11 +74,11 @@ public class Friend {
         this.friendships = friendships;
     }
 
-//    public Set<Invitation> getInvitations() {
-//        return invitations;
-//    }
-//
-//    public void setInvitations(Set<Invitation> invitations) {
-//        this.invitations = invitations;
-//    }
+    public Set<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(Set<Invitation> invitations) {
+        this.invitations = invitations;
+    }
 }

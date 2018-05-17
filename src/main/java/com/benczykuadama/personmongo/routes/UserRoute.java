@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.routes;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.service.UserService;
 import com.benczykuadama.personmongo.service.UserServiceImpl;
@@ -85,8 +86,11 @@ public class UserRoute extends RouteBuilder {
             .get("/network").outTypeList(Friend.class)
                 .to("bean:friendService?method=findNetwork(${header.userName})")
 
+            .get("/invitations").outTypeList(Invitation.class)
+                .to("bean:friendService?method=showInvitations(${header.userName})")
+
             .post("/invite/{another}")
-                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+//                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("another").type(RestParamType.path).dataType("string").endParam()
                 .to("bean:friendService?method=invite(${header.userName}, ${header.another})");
 
@@ -94,8 +98,11 @@ public class UserRoute extends RouteBuilder {
 
 
 
-        from("direct:register").enrich("direct:mongo", (exchange, exchange1) -> exchange1).to("bean:friendService?method=save(${body})");
+        from("direct:register")
+                .enrich("direct:mongo", (exchange, exchange1) -> exchange1)
+                .to("bean:friendService?method=save(${body})");
 
-        from("direct:mongo").to("bean:userService?method=save(${body})");
+        from("direct:mongo")
+                .to("bean:userService?method=save(${body})");
     }
 }
