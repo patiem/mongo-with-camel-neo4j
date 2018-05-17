@@ -50,7 +50,12 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
+    public void makeFriends(String user, String friend) {
+        repository.makeFriend(user, friend, new Date());
+    }
+
+    @Override
     public List<Invitation> showInvitations(String name) {
-        return IteratorUtils.toList(repository.getInviations(name).iterator());
+        return IteratorUtils.toList(repository.getInvitations(name).iterator());
     }
 }

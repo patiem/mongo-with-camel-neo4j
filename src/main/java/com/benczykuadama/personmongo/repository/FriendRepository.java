@@ -29,7 +29,8 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
     void makeFriend(String name, String name2, Date date);
 
     @Query("MATCH (u:Friend {name:{0}})-[rel:IS_INVITED]-(f:Friend) RETURN rel")
-    List<Invitation> getInviations(String name);
+    List<Invitation> getInvitations(String name);
+
 
 }
 

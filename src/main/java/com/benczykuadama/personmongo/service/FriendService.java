@@ -4,7 +4,6 @@ import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface FriendService {
@@ -22,4 +21,7 @@ public interface FriendService {
     void invite(String user, String friend);
 
     List<Invitation> showInvitations(String name);
+
+    void makeFriends(String user, String friend);
+
 }

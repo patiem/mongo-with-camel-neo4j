@@ -90,10 +90,14 @@ public class UserRoute extends RouteBuilder {
                 .to("bean:friendService?method=showInvitations(${header.userName})")
 
             .post("/invite/{another}")
-//                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("another").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=invite(${header.userName}, ${header.another})");
+                .to("bean:friendService?method=invite(${header.userName}, ${header.another})")
 
+            .post("/accept/{friendName}")
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=makeFriends(${header.userName}, ${header.friendName})");
 
 
 
