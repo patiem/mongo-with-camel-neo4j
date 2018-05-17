@@ -46,7 +46,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void invite(String user, String friend) {
-        repository.invite(user, friend);
+        repository.invite(user, friend, new Date());
     }
 
     @Override

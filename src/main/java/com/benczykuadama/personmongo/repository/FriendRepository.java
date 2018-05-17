@@ -22,10 +22,10 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
     @Query("MATCH (me:Friend {name:{0}})-[:FRIENDS_WITH*]-(friend:Friend) RETURN friend")
     List<Friend> findNetwork(String name);
 
-    @Query("MATCH (u:Friend {name:{1}}), (f:Friend {name:{0}}) CREATE (u)-[:IS_INVITED]->(f)")
-    void invite(String name, String name2);
+    @Query("MATCH (u:Friend {name:{1}}), (f:Friend {name:{0}}) CREATE (u)-[:IS_INVITED {sendOn: {2}}]->(f)")
+    void invite(String name, String name2, Date date);
 
-    @Query("MATCH (u:Friend {name:{0}}), (f:Friend {name:{1}}) CREATE (u)-[:FRIENDS_WITH {dateAdded:{2}}]->(f)")
+    @Query("MATCH (u:Friend {name:{0}})-[r]-(f:Friend {name:{1}}) WHERE type(r)='IS_INVITED' CREATE (u)-[:FRIENDS_WITH {since: {2}}]->(f) DELETE r")
     void makeFriend(String name, String name2, Date date);
 
     @Query("MATCH (u:Friend {name:{0}})-[rel:IS_INVITED]-(f:Friend) RETURN rel")

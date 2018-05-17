@@ -23,11 +23,8 @@ public class Invitation {
     @JsonSerialize(using = CustomSerializer.class)
     private Friend fromUser;
 
-    private Boolean accepted = false;
-    private Boolean declined = false;
-
     @DateLong
-    private Date since;
+    private Date sendOn;
 
     public Invitation() {
     }
@@ -48,28 +45,12 @@ public class Invitation {
         this.fromUser = fromUser;
     }
 
-    public Boolean getAccepted() {
-        return accepted;
+    public Date getSendOn() {
+        return sendOn;
     }
 
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public Boolean getDeclined() {
-        return declined;
-    }
-
-    public void setDeclined(Boolean declined) {
-        this.declined = declined;
-    }
-
-    public Date getSince() {
-        return since;
-    }
-
-    public void setSince(Date since) {
-        this.since = since;
+    public void setSendOn(Date sendOn) {
+        this.sendOn = sendOn;
     }
 
     public Friend getToUser() {
