@@ -7,7 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Document(collection = "users")
@@ -20,8 +22,8 @@ public class User {
     private String name;
 
     private String city;
-
     private Date birthDate;
+    private List<UserPost> posts = new ArrayList<>();
 
     public User() {
     }
@@ -73,6 +75,22 @@ public class User {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = createDate(birthDate);
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public List<UserPost> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<UserPost> posts) {
+        this.posts = posts;
+    }
+
+    public void publish(UserPost post) {
+        posts.add(post);
     }
 
     @Override

@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@EnableNeo4jRepositories()
+@EnableNeo4jRepositories
 public class PersonMongoApplication {
 
     public static void main(String[] args) {

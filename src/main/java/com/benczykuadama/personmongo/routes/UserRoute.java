@@ -3,8 +3,10 @@ package com.benczykuadama.personmongo.routes;
 import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
+import com.benczykuadama.personmongo.model.UserPost;
 import com.benczykuadama.personmongo.service.FriendService;
 import com.benczykuadama.personmongo.service.FriendServiceImpl;
+import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
@@ -110,7 +112,13 @@ public class UserRoute extends RouteBuilder {
             .get("/distanceBetween/{friendName}").outTypeList(Long.class)
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})");
+                .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})")
+
+            .post("/message/add").type(UserPost.class)
+                .to("bean:userPostService?method=save(${header.userName}, ${body})")
+
+            .get("/message/my").outTypeList(UserPost.class)
+                .to("bean:userPostService?method=getPosts(${header.userName})");
 
 
 
