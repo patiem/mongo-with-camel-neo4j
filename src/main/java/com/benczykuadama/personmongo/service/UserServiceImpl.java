@@ -1,13 +1,16 @@
 package com.benczykuadama.personmongo.service;
 
+import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service(value = "userService")
@@ -27,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllByName(String name) {
-        return repository.findAllByName(name);
+    public User findByName(String name) {
+        return repository.findByName(name);
     }
 
     @Override
@@ -54,6 +57,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllByBirthDateBetweenAndName(int startDate, int endDate, String name) {
         return repository.findAllByBirthDateBetweenAndName(countDate(startDate), countDate(endDate), name);
+    }
+
+    @Override
+    public List<User> getUsers(List<Friend> friends) {
+        List<User> users = friends.stream().map(friend -> findByName(friend.getName())).collect(Collectors.toList());
+        return users;
     }
 
     private Date countDate(int years) {

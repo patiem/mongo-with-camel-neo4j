@@ -30,7 +30,7 @@ public class UserRepositoryIT {
         repository.save(user);
         assertNotNull(user.getId());
 
-        User userFromDB = repository.findAllByName(user.getName()).get(0);
+        User userFromDB = repository.findByName(user.getName());
         assertEquals(user, userFromDB);
     }
 }
