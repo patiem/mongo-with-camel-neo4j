@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.routes;
 
 import com.benczykuadama.personmongo.model.Friend;
+import com.benczykuadama.personmongo.model.Friendship;
 import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.service.UserService;
@@ -100,10 +101,20 @@ public class UserRoute extends RouteBuilder {
                 .to("bean:friendService?method=makeFriends(${header.userName}, ${header.friendName})")
 
             .post("/unfriend/{friendName}")
+                .outType(Long.class)
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=unfriend(${header.userName}, ${header.friendName})");
+                .to("bean:friendService?method=unfriend(${header.userName}, ${header.friendName})")
 
+            .get("/pathTo/{friendName}").outTypeList(Friend.class)
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=pathTo(${header.userName}, ${header.friendName})")
+
+            .get("/distanceBetween/{friendName}").outTypeList(Friend.class)
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
+                .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})");
 
 
 

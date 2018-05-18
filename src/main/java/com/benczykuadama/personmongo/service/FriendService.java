@@ -26,4 +26,8 @@ public interface FriendService {
 
     void unfriend(String user, String friend);
 
+    List<Friend> pathTo(String user, String friend);
+
+    Integer distanceBetween(String user, String friend);
+
 }

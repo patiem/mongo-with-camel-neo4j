@@ -6,10 +6,9 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface FriendRepository extends Neo4jRepository<Friend, Long> {
@@ -33,6 +32,14 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
 
     @Query("MATCH (u:Friend {name:{0}})-[r]-(f:Friend {name:{1}}) WHERE type(r)='FRIENDS_WITH' DELETE r")
     void unfriend(String user, String friend);
+
+    @Query("MATCH (me:Friend { name: {0}}),(f:Friend { name: {1}}), p = shortestPath((me)-[*]-(f))\n" +
+            "WHERE NONE (r IN relationships(p) WHERE type(r)= 'IS_INVITED') RETURN p")
+    ArrayList<Friend> pathTo(String user, String friend);
+
+    @Query("MATCH (me:Friend { name: {0}}),(f:Friend { name: {1}}), p = shortestPath((me)-[*]-(f))\n" +
+            "WHERE NONE (r IN relationships(p) WHERE type(r)= 'IS_INVITED') RETURN length(p)")
+    Integer distanceBetween(String user, String friend);
 }
 
 

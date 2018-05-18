@@ -59,9 +59,20 @@ public class FriendServiceImpl implements FriendService {
         repository.unfriend(user, friend);
     }
 
+    @Override
+    public Integer distanceBetween(String user, String friend) {
+        return repository.distanceBetween(user, friend);
+    }
+
+    @Override
+    public List<Friend> pathTo(String user, String friend) {
+        return repository.pathTo(user, friend);
+    }
 
     @Override
     public List<Invitation> showInvitations(String name) {
         return IteratorUtils.toList(repository.getInvitations(name).iterator());
     }
+
+
 }
