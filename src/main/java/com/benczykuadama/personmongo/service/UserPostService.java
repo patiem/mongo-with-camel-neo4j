@@ -2,9 +2,9 @@ package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.model.UserPost;
+import com.benczykuadama.personmongo.model.UserPostView;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserPostService {
 
@@ -12,5 +12,5 @@ public interface UserPostService {
 
     List<UserPost> getPosts(String userName);
 
-    Map<User, List<UserPost>> getPosts(List<User> users);
+    List<UserPostView> getPosts(List<User> users);
 }

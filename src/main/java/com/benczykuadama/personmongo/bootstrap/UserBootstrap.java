@@ -3,8 +3,10 @@ package com.benczykuadama.personmongo.bootstrap;
 import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.Friendship;
 import com.benczykuadama.personmongo.model.User;
+import com.benczykuadama.personmongo.model.UserPost;
 import com.benczykuadama.personmongo.repository.FriendRepository;
 import com.benczykuadama.personmongo.repository.UserRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -75,7 +77,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         gregF.addFrienship(new Friendship(gregF, paulF));
         gregF.addFrienship(new Friendship(gregF, johnF));
         neoRepository.save(gregF);
-        paulF.addFrienship(new Friendship(paulF,johnF));
+        paulF.addFrienship(new Friendship(paulF, johnF));
         neoRepository.save(paulF);
 
     }
@@ -95,7 +97,21 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         john = new User("John", "London", "01-12-1970");
         paul = new User("Paul", "London", "01-12-2010");
 
+
         team = Arrays.asList(ala, ola, ela, tom, tobi, tommy, greg, john, paul);
+
+        List<User> postTeam = Arrays.asList(ala, ola, ela, greg, paul);
+
+        for (int i = 0; i < 3; i++) {
+            postTeam.stream().forEach(user -> {
+                user.publish(new UserPost(user.getName() + " : " + RandomStringUtils.random(20, true, true)));
+                try {
+                    Thread.sleep(1004);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
 
         mongoRepository.save(team);
 

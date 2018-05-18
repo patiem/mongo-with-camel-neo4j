@@ -1,9 +1,6 @@
 package com.benczykuadama.personmongo.routes;
 
-import com.benczykuadama.personmongo.model.Friend;
-import com.benczykuadama.personmongo.model.Invitation;
-import com.benczykuadama.personmongo.model.User;
-import com.benczykuadama.personmongo.model.UserPost;
+import com.benczykuadama.personmongo.model.*;
 import com.benczykuadama.personmongo.service.FriendService;
 import com.benczykuadama.personmongo.service.FriendServiceImpl;
 import org.apache.camel.Message;
@@ -11,6 +8,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Component
 public class UserRoute extends RouteBuilder {
@@ -118,7 +117,10 @@ public class UserRoute extends RouteBuilder {
                 .to("bean:userPostService?method=save(${header.userName}, ${body})")
 
             .get("/message/my").outTypeList(UserPost.class)
-                .to("bean:userPostService?method=getPosts(${header.userName})");
+                .to("bean:userPostService?method=getPosts(${header.userName})")
+
+            .get("/message/friends").outTypeList(UserPostView.class)
+                .to("direct:friendsPosts");
 
 
 
@@ -143,5 +145,9 @@ public class UserRoute extends RouteBuilder {
 
         from("direct:convert")
                 .to("bean:userService?method=getUsers(${body})");
+
+        from("direct:friendsPosts")
+                .to("direct:friends")
+                .to("bean:userPostService?method=getPosts(${body})");
     }
 }

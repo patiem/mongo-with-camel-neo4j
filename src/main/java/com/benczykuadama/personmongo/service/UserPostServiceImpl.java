@@ -1,11 +1,15 @@
 package com.benczykuadama.personmongo.service;
 
+import com.benczykuadama.personmongo.model.PostWall;
 import com.benczykuadama.personmongo.model.User;
 import com.benczykuadama.personmongo.model.UserPost;
+import com.benczykuadama.personmongo.model.UserPostView;
 import com.benczykuadama.personmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +32,12 @@ public class UserPostServiceImpl implements UserPostService {
     }
 
     @Override
-    public Map<User, List<UserPost>> getPosts(List<User> users) {
-        return null;
+    public List<UserPostView> getPosts(List<User> users) {
+        PostWall wall = new PostWall();
+        users.forEach(user -> user.getPosts().forEach(post -> wall.addPostView(new UserPostView(user.getName(), post))));
+
+        return wall.sortPostsByDate();
+
     }
 
 
