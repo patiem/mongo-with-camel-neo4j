@@ -1,16 +1,11 @@
 package com.benczykuadama.personmongo.routes;
 
 import com.benczykuadama.personmongo.model.Friend;
-import com.benczykuadama.personmongo.model.Friendship;
 import com.benczykuadama.personmongo.model.Invitation;
 import com.benczykuadama.personmongo.model.User;
-import com.benczykuadama.personmongo.service.UserService;
-import com.benczykuadama.personmongo.service.UserServiceImpl;
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,20 +15,19 @@ public class UserRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         restConfiguration()
-                .component("servlet")
-                .bindingMode(RestBindingMode.json)
-
-        .contextPath("/api")
-        .apiContextPath("/swagger")
-        .apiContextRouteId("swagger")
-        .apiProperty("api.title", "Mordabook API")
-        .apiProperty("api.version", "6.6.6")
+            .component("servlet")
+            .bindingMode(RestBindingMode.json)
+            .contextPath("/api")
+            .apiContextPath("/swagger")
+            .apiContextRouteId("swagger")
+            .apiProperty("api.title", "Mordabook API")
+            .apiProperty("api.version", "6.6.6")
                 .scheme("http,https")
                 .host("localhost:8080");
 
         rest("/users")
-                .produces("aplication/json")
-                .consumes("aplication/json")
+                .produces("application/json")
+                .consumes("application/json")
 
                 .post().type(User.class)
                     .to("direct:register")
@@ -71,8 +65,8 @@ public class UserRoute extends RouteBuilder {
 
 
         rest("/user/{userName}")
-                .produces("aplication/json")
-                .consumes("aplication/json")
+                .produces("application/json")
+                .consumes("application/json")
 
             .get().outType(Friend.class)
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
