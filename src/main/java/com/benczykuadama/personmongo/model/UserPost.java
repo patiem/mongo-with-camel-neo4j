@@ -1,10 +1,14 @@
 package com.benczykuadama.personmongo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class UserPost {
 
     String message;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss a z")
     Date date;
 
     public UserPost() {}

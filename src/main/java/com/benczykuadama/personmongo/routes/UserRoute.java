@@ -116,11 +116,14 @@ public class UserRoute extends RouteBuilder {
             .post("/message/add").type(UserPost.class)
                 .to("bean:userPostService?method=save(${header.userName}, ${body})")
 
-            .get("/message/my").outTypeList(UserPost.class)
+            .get("/message/my").outType(PostWall.class)
                 .to("bean:userPostService?method=getPosts(${header.userName})")
 
-            .get("/message/friends").outTypeList(UserPostView.class)
-                .to("direct:friendsPosts");
+            .get("/message/friends").outType(PostWall.class)
+                .to("direct:friendsPosts")
+
+            .get("/message/network").outType(PostWall.class)
+                .to("direct:networkPosts");
 
 
 
@@ -148,6 +151,10 @@ public class UserRoute extends RouteBuilder {
 
         from("direct:friendsPosts")
                 .to("direct:friends")
-                .to("bean:userPostService?method=getPosts(${body})");
+                .to("bean:userPostService?method=getPosts(${body}, FRIENDS)");
+
+        from("direct:networkPosts")
+                .to("direct:network")
+                .to("bean:userPostService?method=getPosts(${body}, NETWORK)");
     }
 }

@@ -1,5 +1,6 @@
 package com.benczykuadama.personmongo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
@@ -24,6 +25,7 @@ public class Friendship {
     private Friend second;
 
     @DateLong
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss a z")
     private Date since;
 
     public Friendship() {

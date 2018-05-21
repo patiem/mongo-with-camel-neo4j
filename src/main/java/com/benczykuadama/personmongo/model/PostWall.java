@@ -3,25 +3,36 @@ package com.benczykuadama.personmongo.model;
 import java.util.*;
 
 public class PostWall {
-    
+
+    private PostWallType title;
     private List<UserPostView> wall = new ArrayList<>();
 
-    public PostWall() {
+    public PostWall() {}
+
+
+    public PostWall sortedWall() {
+        wall.sort(Comparator.comparing(o -> (o.provideDate())));
+        return this;
     }
-
-    public List<UserPostView> sortPostsByDate() {
-        wall.sort(new Comparator<UserPostView>() {
-            @Override
-            public int compare(UserPostView o1, UserPostView o2) {
-                return (o1.provideDate()).compareTo(o2.provideDate());
-            }
-        });
-
-        return wall;
-    }
-
 
     public void addPostView(UserPostView userPostView) {
         wall.add(userPostView);
+    }
+
+    public PostWallType getTitle() {
+        return title;
+    }
+
+    public void setTitle(PostWallType title) {
+        this.title = title;
+    }
+
+
+    public List<UserPostView> getWall() {
+        return wall;
+    }
+
+    public void setWall(List<UserPostView> wall) {
+        this.wall = wall;
     }
 }
