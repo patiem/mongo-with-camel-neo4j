@@ -61,6 +61,14 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public Integer distanceBetween(String user, String friend) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println(user + " : " + i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return repository.distanceBetween(user, friend);
     }
 

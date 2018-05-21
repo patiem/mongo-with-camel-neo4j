@@ -6,7 +6,7 @@ public enum PostWallType {
 
     USER("Your posts"),
     FRIENDS("Your friends posts"),
-    NETWORK("Your networ posts");
+    NETWORK("Your network posts");
 
     private String title;
 

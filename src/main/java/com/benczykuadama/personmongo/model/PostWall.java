@@ -10,6 +10,7 @@ public class PostWall {
     public PostWall() {}
 
 
+
     public PostWall sortedWall() {
         wall.sort(Comparator.comparing(o -> (o.provideDate())));
         return this;
@@ -26,7 +27,6 @@ public class PostWall {
     public void setTitle(PostWallType title) {
         this.title = title;
     }
-
 
     public List<UserPostView> getWall() {
         return wall;

@@ -1,15 +1,14 @@
 package com.benczykuadama.personmongo.routes;
 
-import com.benczykuadama.personmongo.model.*;
-import com.benczykuadama.personmongo.service.FriendService;
+import com.benczykuadama.personmongo.model.Invitation;
+import com.benczykuadama.personmongo.model.PostWall;
+import com.benczykuadama.personmongo.model.User;
+import com.benczykuadama.personmongo.model.UserPost;
 import com.benczykuadama.personmongo.service.FriendServiceImpl;
-import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.model.rest.RestParamType;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class UserRoute extends RouteBuilder {
@@ -32,7 +31,8 @@ public class UserRoute extends RouteBuilder {
                 .produces("application/json")
                 .consumes("application/json")
 
-                .post().type(User.class)
+                .post()
+                .type(User.class)
                     .to("direct:register")
 
                 .get().outType(User[].class)
@@ -111,7 +111,7 @@ public class UserRoute extends RouteBuilder {
             .get("/distanceBetween/{friendName}").outTypeList(Long.class)
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
-                .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})")
+                .to("direct:queue")
 
             .post("/message/add").type(UserPost.class)
                 .to("bean:userPostService?method=save(${header.userName}, ${body})")
@@ -156,5 +156,14 @@ public class UserRoute extends RouteBuilder {
         from("direct:networkPosts")
                 .to("direct:network")
                 .to("bean:userPostService?method=getPosts(${body}, NETWORK)");
+
+        from("direct:queue")
+                .to("activemq:distance");
+
+        from("activemq:distance?concurrentConsumers=5")
+                .log("${header.userName}")
+                .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})")
+                .log("${body}");
+
     }
 }

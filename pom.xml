@@ -85,6 +85,12 @@
             <version>${camel.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-camel</artifactId>
+            <version>5.14.0</version>
+        </dependency>
+
 
         <!--swagger-->
         <dependency>
@@ -103,15 +109,7 @@
             <version>${springfox-swagger}</version>
         </dependency>
 
-        <!--neo4j-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.camel</groupId>-->
-            <!--<artifactId>camel-spring-neo4j</artifactId>-->
-            <!--<version>${camel.version}</version>-->
-        <!--</dependency>-->
 
-
-        
         <!--tests-->
 
         <dependency>
