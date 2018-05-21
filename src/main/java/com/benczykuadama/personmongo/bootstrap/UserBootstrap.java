@@ -105,11 +105,6 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         for (int i = 0; i < 3; i++) {
             postTeam.stream().forEach(user -> {
                 user.publish(new UserPost(user.getName() + " : " + RandomStringUtils.random(20, true, true)));
-                try {
-                    Thread.sleep(1004);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             });
         }
 

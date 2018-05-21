@@ -41,11 +41,3 @@ public interface FriendRepository extends Neo4jRepository<Friend, Long> {
             "WHERE NONE (r IN relationships(p) WHERE type(r)= 'IS_INVITED') RETURN length(p)")
     Integer distanceBetween(String user, String friend);
 }
-
-
-//    @Query("MATCH p=(f:Friend {name:{0}})-[r:FRIENDS_WITH*0..3]-(p2) return p;")
-//    Iterable<Map<String, Friend>> getFriendsPaths(String friendName);
-
-//    MATCH (a:LabelA {id: '123abc'), (res:Resource {id: '321cba'})
-//        WHERE NOT(()-[:has_resource]->res)
-//        CREATE a-[:has_resource]->res

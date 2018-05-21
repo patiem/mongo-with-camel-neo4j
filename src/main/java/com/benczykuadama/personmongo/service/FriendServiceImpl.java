@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service(value = "friendService")
@@ -61,7 +62,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public Integer distanceBetween(String user, String friend) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             System.out.println(user + " : " + i);
             try {
                 Thread.sleep(1000);
@@ -69,7 +70,8 @@ public class FriendServiceImpl implements FriendService {
                 e.printStackTrace();
             }
         }
-        return repository.distanceBetween(user, friend);
+        Integer distance = Optional.ofNullable(repository.distanceBetween(user, friend)).orElse(0);
+        return distance;
     }
 
     @Override
