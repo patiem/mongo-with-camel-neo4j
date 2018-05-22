@@ -25,4 +25,6 @@ public class PersonMongoApplication {
         servlet.setName("CamelServlet");
         return servlet;
     }
+
+
 }

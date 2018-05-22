@@ -75,17 +75,17 @@ public class UserRoute extends RouteBuilder {
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .to("bean:userService?method=findByName(${header.userName})")
 
-            .get("/all").outTypeList(User.class)
+            .get("/all").outType(User[].class)
                 .to("bean:userService?method=findAll()")
 
-            .get("/friends").outTypeList(User.class)
+            .get("/friends").outType(User[].class)
                 .to("direct:friends")
 
-            .get("/network").outTypeList(User.class)
+            .get("/network").outType(User[].class)
                 .to("bean:friendService?method=findNetwork(${header.userName})")
                 .to("direct:network")
 
-            .get("/invitations").outTypeList(Invitation.class)
+            .get("/invitations").outType(Invitation[].class)
                 .to("bean:friendService?method=showInvitations(${header.userName})")
 
             .post("/invite/{another}")
@@ -103,15 +103,21 @@ public class UserRoute extends RouteBuilder {
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
                 .to("bean:friendService?method=unfriend(${header.userName}, ${header.friendName})")
 
-            .get("/pathTo/{friendName}").outTypeList(User.class)
+            .get("/pathTo/{friendName}").outType(User[].class)
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
                 .to("direct:path")
 
-            .get("/distanceBetween/{friendName}").outTypeList(Long.class)
+            .get("/countDistance/{friendName}").outType(String.class)
+                .responseMessage().code(200).message("Your request is in process").endResponseMessage()
                 .param().name("userName").type(RestParamType.path).dataType("string").endParam()
                 .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
                 .to("direct:queue")
+
+            .get("/distance/{friendName}").outType(Integer.class)
+                .param().name("userName").type(RestParamType.path).dataType("string").endParam()
+                .param().name("friendName").type(RestParamType.path).dataType("string").endParam()
+                .to("direct:result")
 
             .post("/message/add").type(UserPost.class)
                 .to("bean:userPostService?method=save(${header.userName}, ${body})")
@@ -161,9 +167,10 @@ public class UserRoute extends RouteBuilder {
                 .to("activemq:distance");
 
         from("activemq:distance?concurrentConsumers=5")
-                .log("${header.userName}")
                 .to("bean:friendService?method=distanceBetween(${header.userName}, ${header.friendName})")
-                .log("${body}");
+                .log("${body}")
+                .to("direct:saveInCache")
+                .setBody(simple("Your request is in process, your result will be available on address user/{yourName}/resultFor/{friendName}"));
 
     }
 }

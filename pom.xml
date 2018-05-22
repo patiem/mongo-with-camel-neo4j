@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <camel.version>2.18.3</camel.version>
+        <camel.version>2.21.0</camel.version>
         <springfox-swagger>2.8.0</springfox-swagger>
     </properties>
 
@@ -36,13 +36,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!--????-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.springframework.boot</groupId>-->
-                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
         </dependency>
 
         <!--DBs-->
@@ -55,7 +48,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-neo4j</artifactId>
-            <!--<version>5.0.7.RELEASE</version>-->
         </dependency>
 
 
@@ -66,18 +58,11 @@
             <version>${camel.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.apache.camel</groupId>-->
-            <!--<artifactId>camel-restlet-starter</artifactId>-->
-            <!--<version>${camel.version}</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-servlet-starter</artifactId>
+            <artifactId>camel-servlet</artifactId>
             <version>${camel.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -91,11 +76,16 @@
             <version>5.14.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-ehcache</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
 
         <!--swagger-->
         <dependency>
             <groupId>org.apache.camel</groupId>
-            <artifactId>camel-swagger-java-starter</artifactId>
+            <artifactId>camel-swagger-java</artifactId>
             <version>${camel.version}</version>
         </dependency>
         <dependency>
@@ -122,6 +112,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-servlet</artifactId>
+            <version>2.21.0</version>
         </dependency>
     </dependencies>
 
