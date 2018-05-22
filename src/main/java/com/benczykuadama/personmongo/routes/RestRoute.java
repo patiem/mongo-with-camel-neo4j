@@ -30,8 +30,7 @@ public class RestRoute extends RouteBuilder {
                 .produces("application/json")
                 .consumes("application/json")
 
-                .post()
-                .type(User.class)
+                .post().type(User.class)
                     .to("direct:register")
 
                 .get().outType(User[].class)
