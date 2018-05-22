@@ -29,7 +29,9 @@
 $ mvn clean spring-boot:run
 ``` 
 
-Rest Api can be found on [SWAGGER UI](http://localhost:8080/swagger-ui.html)
+Rest Api can be found on [SWAGGER UI](http://localhost:8080/swagger-ui.html) - it doesnt need any external resources, it's part of application. 
+
+You can see Neo4j's nodes and relation through [NEO4J UI](http://localhost:7474/browser/)
 
 #### Tests
 
