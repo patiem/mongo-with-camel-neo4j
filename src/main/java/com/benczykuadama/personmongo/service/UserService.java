@@ -2,11 +2,7 @@ package com.benczykuadama.personmongo.service;
 
 import com.benczykuadama.personmongo.model.Friend;
 import com.benczykuadama.personmongo.model.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 
