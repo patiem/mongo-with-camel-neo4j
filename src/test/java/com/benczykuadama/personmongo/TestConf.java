@@ -2,12 +2,14 @@ package com.benczykuadama.personmongo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@Configuration
+@SpringBootApplication
 @EnableAutoConfiguration
 @ActiveProfiles("test")
+@DataMongoTest
 public class TestConf {
 
     public static void main(String[] args) {

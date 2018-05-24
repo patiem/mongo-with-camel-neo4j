@@ -8,6 +8,7 @@ import com.benczykuadama.personmongo.repository.FriendRepository;
 import com.benczykuadama.personmongo.repository.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
+@Profile("!test")
 public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository mongoRepository;
