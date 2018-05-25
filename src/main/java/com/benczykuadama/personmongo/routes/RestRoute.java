@@ -20,7 +20,8 @@ public class RestRoute extends RouteBuilder {
                 .consumes("application/json")
 
                 .post().type(User.class)
-                    .to("direct:register")
+                    .responseMessage().code(200).message("New user is created").endResponseMessage()
+                .to("direct:register")
 
                 .get().outType(User[].class)
                     .to("direct:showAll")

@@ -27,6 +27,7 @@
         <activemq.version>5.14.0</activemq.version>
         <embeded.mongo.version>2.0.3</embeded.mongo.version>
         <rest.assured.version>3.1.0</rest.assured.version>
+        <ogm.version>3.1.0</ogm.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,25 @@
             <artifactId>spring-data-neo4j</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-embedded-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
+        <dependency> <!-- If you're using the Bolt driver -->
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>3.3.5</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!--camel-->
         <dependency>
