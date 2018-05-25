@@ -1,6 +1,7 @@
 package com.benczykuadama.personmongo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,7 +23,10 @@ public class User {
     private String name;
 
     private String city;
+
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthDate;
+
     private List<UserPost> posts = new ArrayList<>();
 
     public User() {
@@ -69,8 +73,9 @@ public class User {
         this.city = city;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getBirthDate() {
+
+        return new SimpleDateFormat("dd-MM-yyyy").format(birthDate);
     }
 
     public void setBirthDate(String birthDate) {

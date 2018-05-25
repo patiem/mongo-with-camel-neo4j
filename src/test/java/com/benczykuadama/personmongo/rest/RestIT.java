@@ -7,6 +7,7 @@ import com.benczykuadama.personmongo.model.UserPost;
 import com.benczykuadama.personmongo.repository.UserRepository;
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import io.restassured.parsing.Parser;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +20,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
+import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static io.restassured.module.jsv.JsonSchemaValidatorSettings.settings;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConf.class)
@@ -35,11 +39,14 @@ public class RestIT {
     @LocalServerPort
     private Integer port;
 
+    private User user;
+    private User user2;
+
     @Before
     public void setup() throws Exception {
         repository.deleteAll();
-        User user = new User("Dorota", "Zakopane", "01-12-1990");
-        User user2 = new User("Ludwik", "Pcim", "01-12-2000");
+        user = new User("Dorota", "Zakopane", "01-12-1990");
+        user2 = new User("Ludwik", "Pcim", "01-12-2000");
 
         UserPost post = new UserPost("text");
         UserPost post2 = new UserPost("text2");
@@ -85,6 +92,25 @@ public class RestIT {
         .then()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat().body(matchesJsonSchemaInClasspath("users-schema.json"));
+
     }
+
+    @Test
+    public void get_findByName_returnsValidUserObject() {
+
+        User userWithName = expect().parser("application/json", Parser.JSON)
+
+            .given()
+                .port(port)
+                .queryParam("userName", "Ludwik")
+            .when()
+                .get("/api/users/findBy/name")
+                .as(User.class);
+
+        assertEquals(user2, userWithName);
+
+    }
+
+
 
 }
