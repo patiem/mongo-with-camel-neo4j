@@ -7,6 +7,7 @@ import com.benczykuadama.personmongo.model.UserPost;
 import com.benczykuadama.personmongo.repository.UserRepository;
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -19,10 +20,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.github.fge.jsonschema.SchemaVersion.DRAFTV4;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
@@ -55,6 +60,8 @@ public class RestIT {
 
         repository.save(user);
         repository.save(user2);
+
+        RestAssured.basePath = "/api/";
     }
 
     @Test
@@ -65,7 +72,7 @@ public class RestIT {
                 .pathParam("userName", "Dorota")
 
         .when()
-                    .get("/api/user/{userName}")
+                    .get("user/{userName}")
 
         .then()
                     .statusCode(HttpStatus.SC_OK)
@@ -86,7 +93,7 @@ public class RestIT {
                 .port(port)
 
         .when()
-                .get("/api/users")
+                .get("users")
 
         .then()
                 .statusCode(HttpStatus.SC_OK)
@@ -103,7 +110,7 @@ public class RestIT {
                 .port(port)
                 .queryParam("userName", "Ludwik")
             .when()
-                .get("/api/users/findBy/name")
+                .get("users/findBy/name")
                 .as(User.class);
 
         assertEquals(user2, userWithName);
@@ -111,8 +118,26 @@ public class RestIT {
     }
 
     @Test
-    public void post_users_createsNewUser() {
+    public void post_users_createsNewUserWithMongoId() {
 
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("name", "Jurek");
+        userMap.put("city", "Lublin");
+        userMap.put("birthDate", "03-05-1981");
+
+
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(userMap)
+
+
+        .when()
+                .post("users")
+
+        .then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("$", hasKey("id"));
 
     }
 
