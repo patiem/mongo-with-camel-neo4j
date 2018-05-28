@@ -5,6 +5,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @NodeEntity
@@ -80,5 +81,20 @@ public class Friend {
 
     public void setInvitations(Set<Invitation> invitations) {
         this.invitations = invitations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Friend friend = (Friend) o;
+        return Objects.equals(id, friend.id) &&
+                Objects.equals(mongoId, friend.mongoId) &&
+                Objects.equals(name, friend.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mongoId, name);
     }
 }

@@ -9,6 +9,7 @@ import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 
 import java.util.Date;
+import java.util.Objects;
 
 @RelationshipEntity(type = "FRIENDS_WITH")
 public class Friendship {
@@ -69,4 +70,5 @@ public class Friendship {
     public void setSince(Date since) {
         this.since = since;
     }
+
 }
